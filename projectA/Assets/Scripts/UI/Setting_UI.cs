@@ -37,7 +37,7 @@ public class Setting_UI : MonoBehaviour
         }
     }
 
-    public void Close()
+    public virtual void Close()
     {
         gameObject.SetActive(false);
     }

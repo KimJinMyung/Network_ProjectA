@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum EPlayerColor
 {
-    Red, 
+    Red,
+    Green,
     Blue
 }
 
@@ -17,5 +18,6 @@ public class PlayerCOlor
     };
 
     public static Color Red {  get { return Colors[(int)EPlayerColor.Red]; } }
+    public static Color Green { get { return Colors[(int)EPlayerColor.Green]; } }
     public static Color Blue { get { return Colors[(int)EPlayerColor.Blue]; } }
 }

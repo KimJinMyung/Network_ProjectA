@@ -5,5 +5,5 @@ using Mirror;
 
 public class Room_Player : NetworkRoomPlayer
 {
-
+    
 }

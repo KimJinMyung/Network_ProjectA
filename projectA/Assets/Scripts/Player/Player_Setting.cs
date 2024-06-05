@@ -8,8 +8,16 @@ public enum EControlType
     Keyboard
 }
 
-public class Player_Setting : MonoBehaviour
+public enum PlayerType
+{
+    Smiler,
+    Exorcist,
+    Survivor
+}
+
+public class Player_Setting
 {
     public static EControlType controlType;
     public static string nickName;
+    public static PlayerType playerType;
 }

@@ -5,5 +5,8 @@ using Mirror;
 
 public class Main_GamePlayer : NetworkBehaviour
 {
-
+    private void Update()
+    {
+        Debug.Log(this.isLocalPlayer);
+    }
 }

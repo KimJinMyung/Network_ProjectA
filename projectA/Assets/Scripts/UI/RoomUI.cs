@@ -1,18 +1,18 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private Text _playerCountText;
 
-    // Update is called once per frame
-    void Update()
+    public void UpdatePlayerCount()
     {
-        
+        var manager = NetworkManager.singleton as GameRoomManager;
+        var players = FindObjectsOfType<CharacterMove>();
+        _playerCountText.text = string.Format("{0} / {1}", players.Length, manager.maxConnections);
     }
 }
