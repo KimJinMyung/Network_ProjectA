@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class CustomSetting_UI : MonoBehaviour
 {
     public void Open()
-    {
+    {        
         CharacterMove.MyRoomPlayer.isMoveAble = false;
         gameObject.SetActive(true);
     }
@@ -14,5 +15,10 @@ public class CustomSetting_UI : MonoBehaviour
     {
         CharacterMove.MyRoomPlayer.isMoveAble = true;
         gameObject.SetActive(false);
+    }
+
+    public void Test()
+    {
+        Debug.LogWarning("´©¸§");
     }
 }

@@ -9,6 +9,11 @@ public class GameRoomManager : NetworkRoomManager
     public int _smilerCount;
     public int _exorcistCount;
 
+    private void Update()
+    {
+        Debug.Log(_smilerCount);
+    }
+
     public override void OnRoomServerConnect(NetworkConnectionToClient conn)
     {
         //base.OnRoomServerConnect(conn);

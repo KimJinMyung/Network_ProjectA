@@ -32,6 +32,46 @@ public class GameRuleStore : NetworkBehaviour
         }
     }
 
+    [SyncVar(hook = nameof(SetSmilerCountText_Hook))]
+    private int SmilerCount;
+    [SerializeField]
+    private Text _SmilerCount;
+
+    public void SetSmilerCountText_Hook(int _, int value)
+    {
+        _SmilerCount.text = value.ToString();
+        UpdateGameRuleOverview();
+    }
+    public void OnChangeSmilerCount(bool isPlus)
+    {
+        int MaxValue = GameRoomManager.singleton.maxConnections < 5 ? 1 :
+    GameRoomManager.singleton.maxConnections < 6 ? 2 : 3;
+
+        SmilerCount = Mathf.Clamp(SmilerCount + (isPlus ? 1 : -1), 1, MaxValue);
+        isRecommendRule = false;
+        _isRecommendRuleToggle.isOn = false;
+    }
+
+    [SyncVar(hook = nameof(SetExorcistCountText_Hook))]
+    private int ExorcistCount;
+    [SerializeField]
+    private Text _ExorcistCount;
+
+    public void SetExorcistCountText_Hook(int _, int value)
+    {
+        _ExorcistCount.text = value.ToString();
+        UpdateGameRuleOverview();
+    }
+    public void OnChangeExorcistCount(bool isPlus)
+    {
+        int MaxValue = GameRoomManager.singleton.maxConnections < 5 ? 1 : 
+            GameRoomManager.singleton.maxConnections < 6 ? 2 : 3;
+        
+        ExorcistCount = Mathf.Clamp(ExorcistCount + (isPlus ? 1 : -1), 1, MaxValue);
+        isRecommendRule = false;
+        _isRecommendRuleToggle.isOn = false;
+    }
+
     [SyncVar(hook = nameof(SetMissionCountText_Hook))]
     private int MissionCount;
     [SerializeField]
@@ -75,6 +115,8 @@ public class GameRuleStore : NetworkBehaviour
         StringBuilder sb = new StringBuilder(isRecommendRule ? "추천 설정\n" : "커스텀 설정\n");
         sb.Append("맵 : The Skeld \n");
         sb.Append('\n');
+        sb.Append($"Smiler Count : {SmilerCount}\n");
+        sb.Append($"Exorcist Count : {ExorcistCount}\n");
         sb.Append($"Gun Parts : {GunPartsCount}\n");
         sb.Append($"Misson Count : {MissionCount}\n");
 
@@ -91,13 +133,16 @@ public class GameRuleStore : NetworkBehaviour
     {
         if (isServer)
         {
+            var manager = GameRoomManager.singleton as GameRoomManager;
+            SmilerCount = manager._smilerCount;
+            ExorcistCount = manager._exorcistCount;
+
             SetRecommendGameRule();
         }  
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Test()
     {
-        
+        Debug.Log("눌림");
     }
 }

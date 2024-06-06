@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class RoomUI : MonoBehaviour
 {
-    [SerializeField]
-    private Text _playerCountText;
+    public static RoomUI instance;
 
-    public void UpdatePlayerCount()
+    [SerializeField]
+    private GameRoomPlayerCounter roomPlayerCounter;
+
+    public GameRoomPlayerCounter playerCounter {  get { return roomPlayerCounter; } }
+
+    private void Awake()
     {
-        var manager = NetworkManager.singleton as GameRoomManager;
-        var players = FindObjectsOfType<CharacterMove>();
-        _playerCountText.text = string.Format("{0} / {1}", players.Length, manager.maxConnections);
+        instance = this;
     }
 }
