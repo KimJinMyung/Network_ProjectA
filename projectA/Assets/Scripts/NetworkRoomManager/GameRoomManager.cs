@@ -21,7 +21,9 @@ public class GameRoomManager : NetworkRoomManager
 
     public override void OnServerChangeScene(string newSceneName)
     {
-        NetworkServer.DestroyPlayerForConnection(CharacterMove.MyRoomPlayer.connectionToClient);
+        //int PlayerPrefabCount = GameObject.FindObjectsOfType<CharacterMove>().Length;
+        //if(PlayerPrefabCount > 0)
+        //    NetworkServer.DestroyPlayerForConnection(CharacterMove.MyRoomPlayer.connectionToClient);
 
         base.OnServerChangeScene(newSceneName);
     }

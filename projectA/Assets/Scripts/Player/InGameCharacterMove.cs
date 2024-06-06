@@ -86,6 +86,16 @@ public class InGameCharacterMove : NetworkBehaviour
         InitRotation();
     }
 
+    private void Start()
+    {
+        var myRoomPlayer = CharacterMove.MyRoomPlayer;
+
+        if (myRoomPlayer.isLocalPlayer)
+        {
+            SetNickName(myRoomPlayer.getNickName);
+        }
+    }
+
     private void Update()
     {
         Gravity();

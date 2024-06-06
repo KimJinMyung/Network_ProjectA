@@ -33,6 +33,8 @@ public class CharacterMove : NetworkRoomPlayer
 
     [SyncVar(hook = nameof(SetNickNameText_Hook))]
     private string nickName;
+
+    public string getNickName { get { return nickName; } }
     [SerializeField]
     private Text NickNameText;
 
