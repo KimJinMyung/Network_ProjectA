@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameRuleItem : MonoBehaviour
@@ -10,6 +8,7 @@ public class GameRuleItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 호스트가 아니면 조작 불가하도록 설정        
         if (!CharacterMove.MyRoomPlayer.isServer)
         {
             inactiveObject.SetActive(false);

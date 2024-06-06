@@ -156,7 +156,7 @@ public class CreateRoom_UI : MonoBehaviour
         var manager = NetworkManager.singleton as GameRoomManager;
 
         //방 설정 작업 처리
-        manager._minPlayerCount = roomData.MaxPlayerCount;
+        manager._minPlayerCount = 2;
         manager.maxConnections = roomData.MaxPlayerCount;
         manager._smilerCount = roomData.SmilerCount;
         manager._exorcistCount = roomData.ExorcistCount;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
@@ -20,6 +18,7 @@ public class GameRoomPlayerCounter : NetworkBehaviour
         bool isStartable = players.Length >= minPlayer;
         _playerCountText.color = isStartable ? Color.red : Color.white;
         _playerCountText.text = string.Format("{0} / {1}", players.Length, maxPlayer);
+        RoomUI.instance.SetInteractableStartButton(isStartable);
     }
 
     // Start is called before the first frame update

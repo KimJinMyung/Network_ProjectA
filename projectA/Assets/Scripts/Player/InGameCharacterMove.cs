@@ -1,35 +1,30 @@
+using Cinemachine;
+using Mirror;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
-using Cinemachine;
 using UnityEngine.UI;
 
-public class CharacterMove : NetworkRoomPlayer
+public class InGameCharacterMove : NetworkBehaviour
 {
-    private static CharacterMove myRoomPlayer;
-
-    public static CharacterMove MyRoomPlayer
-    {
-        get
-        {
-            if (myRoomPlayer == null)
-            {
-                var Players = FindObjectsOfType<CharacterMove>();
-                foreach (var player in Players)
-                {
-                    if (player.isLocalPlayer)
-                    {
-                        myRoomPlayer = player;
-                    }
-                }
-            }
-
-            return myRoomPlayer;
-        }
-    }
-
     [SerializeField]
     private CinemachineVirtualCamera _playerCamera;
+
+    [SyncVar]
+    public EPlayerColor playerColor;
+
+    [SerializeField]
+    private List<GameObject> Meshs;
+
+    [SerializeField]
+    private List<Material> materials;
+
+    [Header("그라운드 확인 overlap")]
+    [SerializeField]
+    private Transform overlapPos;
+
+    [SerializeField]
+    private LayerMask gravityLayermask;
 
     [SyncVar(hook = nameof(SetNickNameText_Hook))]
     private string nickName;
@@ -47,12 +42,6 @@ public class CharacterMove : NetworkRoomPlayer
         nickName = value;
     }
 
-    [Header("그라운드 확인 overlap")]
-    [SerializeField]
-    private Transform overlapPos;
-
-    [SerializeField]
-    private LayerMask gravityLayermask;
 
     private List<Transform> _spawnpoint = new List<Transform>();
 
@@ -82,59 +71,18 @@ public class CharacterMove : NetworkRoomPlayer
         _characterController = GetComponent<CharacterController>();
     }
 
-    public override void OnStartClient()
-    {
-        //foreach (Transform t in GameObject.FindWithTag("SpawnPoint").transform)
-        //{
-        //    _spawnpoint.Add(t);
-        //}
-
-        CmdSetInitPosition(_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
-        //transform.position = (_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
-
-        RoomUI.instance.playerCounter.UpdatePlayerCount();
-
-        if (isServer)
-        {
-            RoomUI.instance.AciveStartButton();
-        }
-
-        if (!this.isLocalPlayer) return;
-
-        _playerCamera.gameObject.SetActive(true);
-        SetNickName(Player_Setting.nickName);
-    }
-
-    [Command]
-    private void CmdSetInitPosition(Vector3 position)
-    {
-        RpcSetInitPosition(position);
-    }
-
-    [ClientRpc]
-    private void RpcSetInitPosition(Vector3 pos)
-    {
-        transform.position = pos;
-    }
-
-    private void OnDestroy()
-    {
-        if (RoomUI.instance == null) return;
-        RoomUI.instance.playerCounter.UpdatePlayerCount();
-    }
-
     private void OnEnable()
     {
         foreach (Transform t in GameObject.FindWithTag("SpawnPoint").transform)
         {
             _spawnpoint.Add(t);
-        }        
+        }
 
         Debug.Log("스폰 완료");
 
         //로컬 플레이어만 실행
         if (!this.isLocalPlayer) return;
-        
+
         InitRotation();
     }
 
@@ -146,16 +94,10 @@ public class CharacterMove : NetworkRoomPlayer
     private void FixedUpdate()
     {
         CheckLocalPlayer();
-        //로컬 플레이어만 실행
-        //CameraRotation();
-        //Move();
     }
 
     private void CheckLocalPlayer()
     {
-        //Debug.Log("로컬 플레이어 : "+ isLocalPlayer);
-        //Debug.Log("서버 : " + isServer);
-        //Debug.Log("클라이언트 : "+isClient);
         if (!this.isLocalPlayer) return;
 
         CameraRotation();
@@ -240,5 +182,35 @@ public class CharacterMove : NetworkRoomPlayer
 
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, 0.8f);
         /*Quaternion.Lerp(_playerCamera.transform.rotation, _mouseRotation, 1f);*/
+    }
+
+    [Command]
+    public void CmdSetPlayerColor(EPlayerColor color)
+    {
+        playerColor = color;
+    }
+
+    [ClientRpc]
+    public void UpdatePlayerColor(EPlayerColor color)
+    {
+        Material playerMaterial = materials[0];
+
+        switch (color)
+        {
+            case EPlayerColor.Red:
+                playerMaterial = materials[(int)EPlayerColor.Red];
+                break;
+            case EPlayerColor.Green:
+                playerMaterial = materials[(int)EPlayerColor.Green];
+                break;
+            case EPlayerColor.Blue:
+                playerMaterial = materials[(int)EPlayerColor.Blue];
+                break;
+        }
+
+        foreach (var item in Meshs)
+        {
+            item.GetComponent<MeshRenderer>().material = playerMaterial;
+        }
     }
 }

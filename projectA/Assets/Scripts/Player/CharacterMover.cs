@@ -1,51 +1,14 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Mirror;
 using Cinemachine;
-using UnityEngine.UI;
+using Mirror;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using UnityEngine;
 
-public class CharacterMove : NetworkRoomPlayer
+public class CharacterMover : NetworkBehaviour
 {
-    private static CharacterMove myRoomPlayer;
-
-    public static CharacterMove MyRoomPlayer
-    {
-        get
-        {
-            if (myRoomPlayer == null)
-            {
-                var Players = FindObjectsOfType<CharacterMove>();
-                foreach (var player in Players)
-                {
-                    if (player.isLocalPlayer)
-                    {
-                        myRoomPlayer = player;
-                    }
-                }
-            }
-
-            return myRoomPlayer;
-        }
-    }
-
     [SerializeField]
     private CinemachineVirtualCamera _playerCamera;
-
-    [SyncVar(hook = nameof(SetNickNameText_Hook))]
-    private string nickName;
-    [SerializeField]
-    private Text NickNameText;
-
-    public void SetNickNameText_Hook(string _, string value)
-    {
-        NickNameText.text = value;
-    }
-
-    [Command]
-    public void SetNickName(string value)
-    {
-        nickName = value;
-    }
 
     [Header("그라운드 확인 overlap")]
     [SerializeField]
@@ -80,86 +43,6 @@ public class CharacterMove : NetworkRoomPlayer
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-    }
-
-    public override void OnStartClient()
-    {
-        //foreach (Transform t in GameObject.FindWithTag("SpawnPoint").transform)
-        //{
-        //    _spawnpoint.Add(t);
-        //}
-
-        CmdSetInitPosition(_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
-        //transform.position = (_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
-
-        RoomUI.instance.playerCounter.UpdatePlayerCount();
-
-        if (isServer)
-        {
-            RoomUI.instance.AciveStartButton();
-        }
-
-        if (!this.isLocalPlayer) return;
-
-        _playerCamera.gameObject.SetActive(true);
-        SetNickName(Player_Setting.nickName);
-    }
-
-    [Command]
-    private void CmdSetInitPosition(Vector3 position)
-    {
-        RpcSetInitPosition(position);
-    }
-
-    [ClientRpc]
-    private void RpcSetInitPosition(Vector3 pos)
-    {
-        transform.position = pos;
-    }
-
-    private void OnDestroy()
-    {
-        if (RoomUI.instance == null) return;
-        RoomUI.instance.playerCounter.UpdatePlayerCount();
-    }
-
-    private void OnEnable()
-    {
-        foreach (Transform t in GameObject.FindWithTag("SpawnPoint").transform)
-        {
-            _spawnpoint.Add(t);
-        }        
-
-        Debug.Log("스폰 완료");
-
-        //로컬 플레이어만 실행
-        if (!this.isLocalPlayer) return;
-        
-        InitRotation();
-    }
-
-    private void Update()
-    {
-        Gravity();
-    }
-
-    private void FixedUpdate()
-    {
-        CheckLocalPlayer();
-        //로컬 플레이어만 실행
-        //CameraRotation();
-        //Move();
-    }
-
-    private void CheckLocalPlayer()
-    {
-        //Debug.Log("로컬 플레이어 : "+ isLocalPlayer);
-        //Debug.Log("서버 : " + isServer);
-        //Debug.Log("클라이언트 : "+isClient);
-        if (!this.isLocalPlayer) return;
-
-        CameraRotation();
-        Move();
     }
 
     private void Move()

@@ -342,6 +342,14 @@ PrefabInstance:
       value: RoomManager
       objectReference: {fileID: 0}
     - target: {fileID: 2644196005321308947, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
+      propertyPath: showRoomGUI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644196005321308947, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
+      propertyPath: playerPrefab
+      value: 
+      objectReference: {fileID: 5674137452211755968, guid: 23a4dc73267b975428ab489909838e9b, type: 3}
+    - target: {fileID: 2644196005321308947, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
       propertyPath: roomPlayerPrefab
       value: 
       objectReference: {fileID: 3122005282937671188, guid: 02ae16c3c3c7b9c41baeed53238a4af5, type: 3}
