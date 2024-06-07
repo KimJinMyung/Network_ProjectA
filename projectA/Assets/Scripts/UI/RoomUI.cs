@@ -37,10 +37,11 @@ public class RoomUI : MonoBehaviour
         foreach (var player in players)
         {
             player.CmdChangeReadyState(true);
-        }
+        }        
 
         var manager = NetworkManager.singleton as GameRoomManager;
-        //manager.OnServerChangeScene(manager.GameplayScene);
         manager.ServerChangeScene(manager.GameplayScene);
+
+
     }
 }

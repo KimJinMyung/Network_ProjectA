@@ -77,19 +77,39 @@ public class CharacterMove : NetworkRoomPlayer
     private float moveSpeed = 3.5f;
 
     public bool isMoveAble = true;
-    private bool isGround;
+    private bool isGrounded;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
     }
 
-    public override void OnStartClient()
+    //public override void OnStartClient()
+    //{
+    //    //foreach (Transform t in GameObject.FindWithTag("SpawnPoint").transform)
+    //    //{
+    //    //    _spawnpoint.Add(t);
+    //    //}
+
+    //    CmdSetInitPosition(_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
+    //    //transform.position = (_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
+
+    //    RoomUI.instance.playerCounter.UpdatePlayerCount();
+
+    //    if (isServer)
+    //    {
+    //        RoomUI.instance.AciveStartButton();
+    //    }
+
+    //    if (!this.isLocalPlayer) return;
+
+    //    _playerCamera.gameObject.SetActive(true);
+    //    SetNickName(Player_Setting.nickName);
+    //}
+
+    public override void Start()
     {
-        //foreach (Transform t in GameObject.FindWithTag("SpawnPoint").transform)
-        //{
-        //    _spawnpoint.Add(t);
-        //}
+        base.Start();
 
         CmdSetInitPosition(_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
         //transform.position = (_spawnpoint[Random.Range(0, _spawnpoint.Count)].position + new Vector3(0, 1, 0));
@@ -131,8 +151,6 @@ public class CharacterMove : NetworkRoomPlayer
         {
             _spawnpoint.Add(t);
         }        
-
-        Debug.Log("스폰 완료");
 
         //로컬 플레이어만 실행
         if (!this.isLocalPlayer) return;
@@ -183,12 +201,12 @@ public class CharacterMove : NetworkRoomPlayer
         if (colliders.Length > 0 && _velocity <= 0.0f)
         {
             _velocity = -1f;
-            isGround = true;
+            isGrounded = true;
         }
         else
         {
             _velocity += gravity * Time.deltaTime;
-            isGround = false;
+            isGrounded = false;
         }
 
         _characterController.Move(-Vector3.down * _velocity * Time.deltaTime);

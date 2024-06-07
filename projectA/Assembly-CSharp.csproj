@@ -59,21 +59,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\UI\GameRoomSetting_UI.cs" />
+    <Compile Include="Assets\Scripts\UI\GameRoomPlayerCounter.cs" />
     <Compile Include="Assets\Scripts\Player\CharacterMove.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu_UI.cs" />
     <Compile Include="Assets\Scripts\Player\Main_GamePlayer.cs" />
     <Compile Include="Assets\Scripts\NetworkRoomManager\GameRoomManager.cs" />
     <Compile Include="Assets\Scripts\UI\GameRuleStore.cs" />
     <Compile Include="Assets\Scripts\UI\CreateRoom_UI.cs" />
-    <Compile Include="Assets\Scripts\Player\Room_Player.cs" />
     <Compile Include="Assets\Scripts\UI\Setting_UI.cs" />
     <Compile Include="Assets\Scripts\Player\Player_Setting.cs" />
     <Compile Include="Assets\Scripts\UI\RoomUI.cs" />
     <Compile Include="Assets\Scripts\Color\PlayerCOlor.cs" />
+    <Compile Include="Assets\Scripts\Player\InGameCharacterMove.cs" />
     <Compile Include="Assets\Scripts\UI\JoinGame_UI.cs" />
     <Compile Include="Assets\Scripts\UI\CustomSetting_UI.cs" />
     <Compile Include="Assets\Scripts\UI\GameRuleItem.cs" />
-    <Compile Include="Assets\Scripts\UI\GameRoomPlayerCounter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

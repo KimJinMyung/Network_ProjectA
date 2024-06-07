@@ -343,7 +343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2644196005321308947, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
       propertyPath: showRoomGUI
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2644196005321308947, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
       propertyPath: playerPrefab
@@ -364,7 +364,7 @@ PrefabInstance:
     - target: {fileID: 2644196005321308947, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
       propertyPath: spawnPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 285999267712935998, guid: 02ae16c3c3c7b9c41baeed53238a4af5, type: 3}
+      objectReference: {fileID: 5674137452211755968, guid: 23a4dc73267b975428ab489909838e9b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9753a0fecd0bd93488fee7092edeb1fb, type: 3}
 --- !u!1001 &3282371052918038911
